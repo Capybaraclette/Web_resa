@@ -3,23 +3,8 @@ if (session_status() == PHP_SESSION_NONE) {
     session_start();
 }
 require 'config.php';
-require 'gestion_utilisateurs.php'; // Inclusion du fichier de gestion des utilisateurs
+require_once 'gestion_utilisateurs.php'; // Inclusion du fichier de gestion des utilisateurs
 
-if (isset($_POST['login'])) {
-    include 'gestion_utilisateurs.php';
-}
-
-if (isset($_POST['register'])) {
-    include 'gestion_utilisateurs.php';
-}
-
-if (isset($_POST['update'])) {
-    include 'gestion_utilisateurs.php';
-}
-
-if (isset($_POST['delete_account'])) {
-    include 'gestion_utilisateurs.php';
-}
 ?>
 
 <!DOCTYPE html>

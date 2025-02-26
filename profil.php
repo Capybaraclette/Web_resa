@@ -17,13 +17,7 @@ if (!$user) {
     exit();
 }
 
-if (isset($_POST['update'])) {
-    include 'gestion_utilisateurs.php';
-}
 
-if (isset($_POST['delete_account'])) {
-    include 'gestion_utilisateurs.php';
-}
 ?>
 
 <!DOCTYPE html>
@@ -33,8 +27,31 @@ if (isset($_POST['delete_account'])) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Profil</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body>
+    <header>
+        <nav class="navbar navbar-expand-lg">
+            <div class="container">
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="fontcolor" id="navbarNav">
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" href="rdv.php">Prendre rendez-vous</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="profil.php">Profil</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="login.php">Déconnexion</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
     <div class="container mt-5">
         <h2 class="text-center">Profil de <?= htmlspecialchars($user['prenom']) ?> <?= htmlspecialchars($user['nom']) ?></h2>
         <form method="POST" action="">
@@ -67,7 +84,6 @@ if (isset($_POST['delete_account'])) {
         <form method="POST" action="" class="mt-3">
             <button type="submit" name="delete_account" class="btn btn-danger">Supprimer mon compte</button>
         </form>
-        <a href="logout.php" class="btn btn-secondary mt-3">Déconnexion</a>
     </div>
 </body>
 </html>

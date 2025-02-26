@@ -20,6 +20,8 @@ if (isset($_POST['register'])) {
     if ($check->rowCount() == 0) {
         $insert = $pdo->prepare("INSERT INTO users (nom, prenom, email, password, date_naissance, adresse, telephone) VALUES (?, ?, ?, ?, ?, ?, ?)");
         $insert->execute([$nom, $prenom, $email, $password, $date, $adresse, $phone]);
+        $_SESSION['user_id'] = $user['id'];
+        header("Location: profil.php");
         echo "Inscription réussie. Veuillez vérifier votre email.";
     } else {
         echo "Cet email est déjà utilisé.";
@@ -69,7 +71,7 @@ if (isset($_POST['delete_account'])) {
     $delete = $pdo->prepare("DELETE FROM users WHERE id = ?");
     $delete->execute([$user_id]);
     session_destroy();
-    header("Location: index.php");
+    header("Location: login.php");
     exit();
 }
 
