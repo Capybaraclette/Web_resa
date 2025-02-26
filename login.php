@@ -70,6 +70,18 @@ if (isset($_POST['delete_account'])) {
                         <label for="password" class="form-label">Mot de passe</label>
                         <input type="password" class="form-control" name="password" required>
                     </div>
+                    <div class="mb-3">
+                        <label for="date" class="form-label">Date de naissance</label>
+                        <input type="date" class="form-control" name="date" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="adresse" class="form-label">Adresse postale</label>
+                        <input type="text" class="form-control" name="adresse" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="phone" class="form-label">Numéro de téléphone</label>
+                        <input type="text" class="form-control" name="phone" required>
+                    </div>
                     <button type="submit" name="register" class="btn btn-success w-100">S'inscrire</button>
                 </form>
             </div>

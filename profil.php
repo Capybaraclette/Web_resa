@@ -1,8 +1,9 @@
 <?php
-session_start();
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
 require 'config.php';
-require 'gestion_utilisateurs.php';
-
+require_once 'gestion_utilisateurs.php';
 if (!isset($_SESSION['user_id'])) {
     header("Location: login.php");
     exit();
@@ -17,16 +18,11 @@ if (!$user) {
 }
 
 if (isset($_POST['update'])) {
-    updateUser($_SESSION['user_id'], $_POST, $pdo);
-    header("Location: profil.php");
-    exit();
+    include 'gestion_utilisateurs.php';
 }
 
 if (isset($_POST['delete_account'])) {
-    deleteUser($_SESSION['user_id'], $pdo);
-    session_destroy();
-    header("Location: login.php");
-    exit();
+    include 'gestion_utilisateurs.php';
 }
 ?>
 
@@ -53,6 +49,18 @@ if (isset($_POST['delete_account'])) {
             <div class="mb-3">
                 <label for="email" class="form-label">Email</label>
                 <input type="email" class="form-control" name="email" value="<?= htmlspecialchars($user['email']) ?>" required>
+            </div>
+            <div class="mb-3">
+                <label for="date" class="form-label">Date de naissance</label>
+                <input type="date" class="form-control" name="date" value="<?= htmlspecialchars($user['date_naissance']) ?>" required>
+            </div>
+            <div class="mb-3">
+                <label for="adresse" class="form-label">Adresse postale</label>
+                <input type="text" class="form-control" name="adresse" value="<?= htmlspecialchars($user['adresse'])?>" required>
+            </div>
+            <div class="mb-3">
+                <label for="phone" class="form-label">Numéro de téléphone</label>
+                <input type="text" class="form-control" name="phone" value="<?= htmlspecialchars($user['telephone'])?>" required>
             </div>
             <button type="submit" name="update" class="btn btn-primary">Mettre à jour</button>
         </form>
