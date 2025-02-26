@@ -2,7 +2,7 @@
 if (session_status() == PHP_SESSION_NONE) {
     session_start();
 }
-require 'config.php';
+require '/config/config.php';
 
 if (isset($_GET['token'])) {
     $token = $_GET['token'];

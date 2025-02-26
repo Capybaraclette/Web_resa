@@ -1,5 +1,5 @@
 <?php
-require 'config.php';
+require '/config/config.php';
 require 'gestion_rdv.php';
 require 'gestion_utilisateurs.php';
 

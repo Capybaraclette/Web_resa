@@ -1,5 +1,5 @@
 <?php
-require 'config.php';
+require '/config/config.php';
 require 'gestion_rdv.php';
 if (session_status() == PHP_SESSION_NONE) {
     session_start();

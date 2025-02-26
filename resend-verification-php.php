@@ -2,7 +2,7 @@
 if (session_status() == PHP_SESSION_NONE) {
     session_start();
 }
-require 'config.php';
+require '/config/config.php';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['email'])) {
     $email = filter_var($_POST['email'], FILTER_VALIDATE_EMAIL);
