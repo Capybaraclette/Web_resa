@@ -13,12 +13,12 @@ if (!isset($_SESSION['user_id'])) {
 }
 
 $user_id = $_SESSION['user_id'];
-$availableSlots = getAvailableSlots($pdo);
 
+// Traitement de la réservation
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (isset($_POST['book'])) {
-        $date = $_POST['date'];
-        $heure = $_POST['heure'];
+        $date_heure = $_POST['heure'];  // Format date + heure
+        list($date, $heure) = explode(' ', $date_heure); // Séparer la date et l'heure
         $message = bookAppointment($user_id, $date, $heure, $pdo);
     } elseif (isset($_POST['cancel'])) {
         $appointment_id = $_POST['appointment_id'];
@@ -30,6 +30,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 $query = $pdo->prepare("SELECT * FROM reservations WHERE user_id = ?");
 $query->execute([$user_id]);
 $appointments = $query->fetchAll(PDO::FETCH_ASSOC);
+
+// Récupérer les créneaux disponibles
+$availableSlots = getAvailableSlots($pdo);
 ?>
 
 <!DOCTYPE html>
@@ -65,25 +68,38 @@ $appointments = $query->fetchAll(PDO::FETCH_ASSOC);
         </nav>
     </header>
 
-
     <div class="container mt-5">
         <h2 class="text-center">Prise de Rendez-vous</h2>
         <?php if (isset($message)) : ?>
             <div class="alert alert-info"> <?= htmlspecialchars($message) ?> </div>
         <?php endif; ?>
+        
+        <!-- Formulaire de réservation (sans champ de date) -->
         <form method="POST" action="">
             <div class="mb-3">
-                <label for="date" class="form-label">Date</label>
-                <input type="date" class="form-control" name="date" required>
-            </div>
-            <div class="mb-3">
-                <label for="heure" class="form-label">Heure</label>
+                <label for="heure" class="form-label">Choisir un créneau</label>
                 <select class="form-control" name="heure" required>
-                    <?php foreach ($availableSlots as $slot) : ?>
-                        <option value="<?= htmlspecialchars($slot['heure_creneau']) ?>">
-                            <?= htmlspecialchars($slot['heure_creneau']) ?>
+                    <?php
+                    // Affichage des créneaux groupés par date
+                    $currentDate = null;
+                    foreach ($availableSlots as $slot) :
+                        $date_creneau = $slot['date_creneau'];
+                        $heure_creneau = $slot['heure_creneau'];
+
+                        // Grouper les créneaux par date
+                        if ($date_creneau !== $currentDate) {
+                            if ($currentDate !== null) {
+                                echo '</optgroup>'; // Fermer l'optgroup précédent
+                            }
+                            echo "<optgroup label='" . htmlspecialchars($date_creneau) . "'>"; // Ouvrir un nouveau groupe pour chaque date
+                            $currentDate = $date_creneau;
+                        }
+                    ?>
+                        <option value="<?= htmlspecialchars($date_creneau . ' ' . $heure_creneau) ?>">
+                            <?= htmlspecialchars($heure_creneau) ?>
                         </option>
                     <?php endforeach; ?>
+                    </optgroup> <!-- Fermer le dernier optgroup -->
                 </select>
             </div>
             <button type="submit" name="book" class="btn btn-primary">Réserver</button>
