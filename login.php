@@ -14,10 +14,32 @@ require_once 'gestion_utilisateurs.php'; // Inclusion du fichier de gestion des 
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Authentification</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body>
+    <header>
+        <nav class="navbar navbar-expand-lg">
+            <div class="container">
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="fontcolor" id="navbarNav">
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" href="login.php">Prendre rendez-vous</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="login.php">Profil</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="login.php">Déconnexion</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
     <div class="container mt-5">
-        <h2 class="text-center">Connexion / Inscription</h2>
         <div class="row">
             <div class="col-md-6">
                 <h3>Connexion</h3>

@@ -19,7 +19,10 @@ if (isset($_POST['register'])) {
     $check->execute([$email]);
     if ($check->rowCount() == 0) {
         $insert = $pdo->prepare("INSERT INTO users (nom, prenom, email, password, date_naissance, adresse, telephone) VALUES (?, ?, ?, ?, ?, ?, ?)");
-        $insert->execute([$nom, $prenom, $email, $password, $date, $adresse, $phone]);
+        $insert->execute([$nom, $prenom, $email, $password, $date, $adresse, $phone]);      
+        $query = $pdo->prepare("SELECT * FROM users WHERE email = ?");
+        $query->execute([$email]);
+        $user = $query->fetch();
         $_SESSION['user_id'] = $user['id'];
         header("Location: profil.php");
         echo "Inscription réussie. Veuillez vérifier votre email.";

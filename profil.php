@@ -4,6 +4,7 @@ if (session_status() == PHP_SESSION_NONE) {
 }
 require 'config.php';
 require_once 'gestion_utilisateurs.php';
+
 if (!isset($_SESSION['user_id'])) {
     header("Location: login.php");
     exit();
