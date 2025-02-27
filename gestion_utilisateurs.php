@@ -2,7 +2,7 @@
 if (session_status() == PHP_SESSION_NONE) {
     session_start();
 }
-require '/config/config.php'; // Fichier de configuration de la base de données
+require 'config.php'; // Fichier de configuration de la base de données
 
 // Inscription
 if (isset($_POST['register'])) {

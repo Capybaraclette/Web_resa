@@ -1,5 +1,5 @@
 <?php
-require '/config/config.php';
+require 'config.php';
 require 'gestion_rdv.php';
 require 'gestion_utilisateurs.php';
 
@@ -18,7 +18,7 @@ $user_id = $_SESSION['user_id'];
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (isset($_POST['book'])) {
         $date_heure = $_POST['heure'];  // Format date + heure
-        list($date, $heure) = explode(' ', $date_heure); // Séparer la date et l'heure
+        list($date, $heure) = explode(' ', $date_heure);
         $message = bookAppointment($user_id, $date, $heure, $pdo);
     } elseif (isset($_POST['cancel'])) {
         $appointment_id = $_POST['appointment_id'];

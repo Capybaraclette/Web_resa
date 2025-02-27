@@ -2,7 +2,7 @@
 if (session_status() == PHP_SESSION_NONE) {
     session_start();
 }
-require '/config/config.php';
+require 'config.php';
 require_once 'gestion_utilisateurs.php'; // Inclusion du fichier de gestion des utilisateurs
 
 ?>

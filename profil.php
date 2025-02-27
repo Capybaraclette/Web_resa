@@ -2,7 +2,8 @@
 if (session_status() == PHP_SESSION_NONE) {
     session_start();
 }
-require '/config/config.php';
+require 'config.php';
+require 'gestion_rdv.php';
 require_once 'gestion_utilisateurs.php';
 
 if (!isset($_SESSION['user_id'])) {
@@ -17,6 +18,19 @@ if (!$user) {
     header("Location: login.php");
     exit();
 }
+
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    if (isset($_POST['cancel'])) {
+        $appointment_id = $_POST['appointment_id'];
+        $message = cancelAppointment($user['id'], $appointment_id, $pdo);
+    }
+}
+
+// Récupérer les rendez-vous de l'utilisateur
+$query = $pdo->prepare("SELECT * FROM reservations WHERE user_id = ?");
+$query->execute([$user['id']]);
+$appointments = $query->fetchAll(PDO::FETCH_ASSOC);
 
 
 ?>
@@ -85,6 +99,20 @@ if (!$user) {
         <form method="POST" action="" class="mt-3">
             <button type="submit" name="delete_account" class="btn btn-danger">Supprimer mon compte</button>
         </form>
+
+        <h2 class="text-center mt-5">Mes Rendez-vous</h2>
+        <ul class="list-group">
+            <?php foreach ($appointments as $appointment) : ?>
+                <li class="list-group-item">
+                    <?= htmlspecialchars($appointment['date_rdv']) ?> à <?= htmlspecialchars($appointment['heure_rdv']) ?>
+                    <form method="POST" action="" class="d-inline">
+                        <input type="hidden" name="appointment_id" value="<?= $appointment['id'] ?>">
+                        <button type="submit" name="cancel" class="btn btn-danger btn-sm">Annuler</button>
+                    </form>
+                </li>
+            <?php endforeach; ?>
+        </ul>
     </div>
+
 </body>
 </html>
